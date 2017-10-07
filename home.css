@@ -1,6 +1,13 @@
 body{
     font-size: 15px;
 }
+.sectionTitle{
+    border-left: 2px solid #D43C33;
+    font-size: 17px;
+    line-height: 1; /*和字体一样高*/
+    padding-left: 8px;
+    margin: 20px 0 8px;
+}
 /* topbar */
 section.topbar{
     display: flex;
@@ -79,13 +86,13 @@ section.topbar > a::after{
 
 section.globaTabs{}
 
-section.playlists{}
+
+
+
+/* 推荐歌单 */
+
 section.playlists > h2{
-    border-left: 2px solid #D43C33;
-    font-size: 17px;
-    line-height: 1; /*和字体一样高*/
-    padding-left: 8px;
-    margin: 20px 0 8px;
+
 }
 section.playlists > ol.songs{
     display: flex;

@@ -76,7 +76,7 @@
       <li class="page-1 active">
         <!-- 推荐歌单 -->
         <section class="playlists">
-          <h2>推荐歌单</h2>
+          <h2 class="sectionTitle">推荐歌单</h2>
           <ol class="songs">
             <li>
               <div class="cover"><img src="https://i.loli.net/2017/10/08/59d91dc0adec6.jpg" alt="封面"></div>
@@ -106,7 +106,7 @@
         </section>
         <!-- 最新音乐 -->
         <section class="songs">
-          <h2>最新音乐</h2>
+          <h2 class="sectionTitle">最新音乐</h2>
           <ol class="list">
             <li>
               <h3>Friends <small>(Remix)</small></h3>
@@ -232,7 +232,7 @@
       <li class="page-3">page 3</li>      
     </ol>
   </div>
-  <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="./vendors/jquery.min.js"></script>
   <script>
     $('.tabs').on('click','li',function(e){
       let $li = $(e.currentTarget)//被点击的元素，监听的元素，就是我要的元素
