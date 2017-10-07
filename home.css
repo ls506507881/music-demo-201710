@@ -1,0 +1,115 @@
+body{
+    font-size: 15px;
+}
+/* topbar */
+section.topbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #D43C33;
+    padding: 17px 10px; /* //5.3125vw 3.123vw */
+}
+section.topbar .logo>svg{
+    width: 142px; /* //44.375vw */
+    height: 25px; /* //7.8125vw */
+    vertical-align: top;
+}
+section.topbar >a{
+    color: white;
+    display: inline-block;
+    font-size: 15px;  /* //4.6875vw */
+    padding: 5px 11px;  /* //1.5625vw  3.4375vw*/
+    line-height: 20px;  /* //6.25vw */
+    position: relative;
+}
+section.topbar > a::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    border: 1px solid white;
+    border-radius: 50px;  /* //6.25vw */
+    transform: scale(0.5);
+    transform-origin: 0 0;
+}
+
+/* tab */
+.tabs{
+    display: flex;
+    border-bottom: 1px solid #ccc;
+}
+.tabs>li{
+    width: 33.333333%;
+    text-align: center;
+    line-height: 20px;
+    display: flex; /*自动收缩*/
+    justify-content: center; /*左右居中*/
+    align-items: center; /*上下居中*/
+}
+.tabs >li.active{
+    color: #D43C33;
+}
+.tabs>li>.text{
+    position: relative;
+    padding: 10px 5px;
+    top: 1px;
+}
+.tabs>li.active>.text{
+
+}
+.tabs>li.active>.text::after{
+    content: "";
+    position: absolute;
+    height: 2px;
+    background: #D43C33;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+.tab-content > li{
+    display: none;
+}
+.tab-content > li.active{
+    display: block;
+}
+
+
+
+section.globaTabs{}
+
+section.playlists{}
+section.playlists > h2{
+    border-left: 2px solid #D43C33;
+    font-size: 17px;
+    line-height: 1; /*和字体一样高*/
+    padding-left: 8px;
+    margin: 20px 0 8px;
+}
+section.playlists > ol.songs{
+    display: flex;
+    flex-wrap: wrap; /*换行*/
+    justify-content: space-between; /*两边布局*/
+    font-size: 13px;
+}
+section.playlists > ol.songs>li{
+    width: 32.8%;
+    margin: 8px 0;
+}
+section.playlists > ol.songs>li p{
+    padding: 6px 2px 0 6px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /*行数*/
+    overflow: hidden;
+    line-height: 1.2;
+    color: #333;
+}
+section.playlists > ol.songs>li img{
+    width: 100%;
+}
+section.songs{}
+section.art{}
+
+
