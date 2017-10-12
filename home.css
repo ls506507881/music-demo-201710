@@ -117,8 +117,8 @@ section.globaTabs{}
 
 /* 推荐歌单 */
 
-section.playlists > h2{
-
+section.playlists {
+    padding-bottom: 12px;
 }
 section.playlists > ol.songs{
     display: flex;
@@ -127,7 +127,7 @@ section.playlists > ol.songs{
     font-size: 13px;
 }
 section.playlists > ol.songs .cover > img{
-    height: 105px;
+    /* height: 105px; */
 }
 section.playlists > ol.songs>li{
     width: 32.8%;
@@ -179,8 +179,8 @@ section.songs > .list{
 section.songs > .list > li{
     position: relative;
     margin-left: 10px;
-    padding-top: 5px;
-    padding-bottom: 6px;
+    padding-top: 7px;
+    padding-bottom: 8px;
     border-bottom: 1px solid #E2E2E3;
 }
 section.songs > .list .playButton{
@@ -190,8 +190,8 @@ section.songs > .list .playButton{
     transform: translateY(-50%)
 }
 section.songs > .list .icon-play{
-    width: 22px;
-    height: 22px;
+    width: 25px;
+    height: 25px;
     vertical-align: middle;
     fill: #AAA;
 }

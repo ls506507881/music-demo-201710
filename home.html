@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./home.css">
   <link rel="stylesheet" href="./reset.css">
-
+  <link rel="stylesheet" href="./vendors/loaders.min.css">
 </head>
 
 <body>
@@ -81,27 +81,27 @@
           <h2 class="sectionTitle">推荐歌单</h2>
           <ol class="songs">
             <li>
-              <div class="cover"><img src="https://i.loli.net/2017/10/08/59d91dc0adec6.jpg" alt="封面"></div>
+              <div class="cover"><img src="http://oxkl41ihc.bkt.clouddn.com/%E5%B0%8F%E8%AF%B4.jpg" alt="封面"></div>
               <p>一本小说，一部电视剧，一片深情</p>
             </li>
             <li>
-              <div class="cover"><img src="https://i.loli.net/2017/10/08/59d91e2ce336f.jpg" alt="封面"></div>
+              <div class="cover"><img src="http://oxkl41ihc.bkt.clouddn.com/%E8%AA%93%E8%A8%80.jpg" alt="封面"></div>
               <p>华语丨你的誓言 也不过是你说的口是心非</p>
             </li>
             <li>
-              <div class="cover"><img src="https://i.loli.net/2017/10/08/59d91f1b5e470.jpg" alt="封面"></div>
+              <div class="cover"><img src="http://oxkl41ihc.bkt.clouddn.com/%E6%B0%91%E8%B0%A3.jpg" alt="封面"></div>
               <p>吉他配民谣：孤独旅人的暖心良药</p>
             </li>
             <li>
-              <div class="cover"><img src="https://i.loli.net/2017/10/08/59d91f1b5cfcd.jpg" alt="封面"></div>
+              <div class="cover"><img src="http://oxkl41ihc.bkt.clouddn.com/%E5%BF%98%E8%AE%B0.jpg" alt="封面"></div>
               <p>华语 | 我可以忘记一切，却忘不了你的出现</p>
             </li>
             <li>
-              <div class="cover"><img src="https://i.loli.net/2017/10/08/59d91f1b59226.jpg" alt="封面"></div>
+              <div class="cover"><img src="http://oxkl41ihc.bkt.clouddn.com/%E6%80%9D%E5%BF%B5.jpg" alt="封面"></div>
               <p>「华语」哭泣使人乞讨，思念使人奔跑</p>
             </li>
             <li>
-              <div class="cover"><img src="https://i.loli.net/2017/10/08/59d91f1b57ff3.jpg" alt="封面"></div>
+              <div class="cover"><img src="http://oxkl41ihc.bkt.clouddn.com/%E6%92%A9%E5%A6%B9.jpg" alt="封面"></div>
               <p>想撩妹？用这单就够了</p>
             </li>
           </ol>
@@ -109,8 +109,11 @@
         <!-- 最新音乐 -->
         <section class="songs">
           <h2 class="sectionTitle">最新音乐</h2>
-          <ol class="list">
-            <li class="f-bd f-bd-btm">
+          <ol id="songs" class="list">
+            <div id="songs-loading" class="square-spin" style="margin:0 auto;width:50px;">
+              <div></div>
+            </div>
+            <!-- <li>
               <h3>羞羞的铁拳<span>(电影《羞羞的铁拳》同名主题曲)</span></h3>
               <p><svg class="icon icon-sq" aria-hidden="true"><use xlink:href="#icon-sq"></use></svg>萧敬腾 - 羞羞的铁拳</p>
               <a class="playButton" href="#">
@@ -179,7 +182,7 @@
               <a class="playButton" href="#">
                 <svg class="icon icon-play" aria-hidden="true"><use xlink:href="#icon-play"></use></svg>
               </a>
-            </li>
+            </li> -->
           </ol>
         </section>
         <!-- 广告 -->
@@ -264,6 +267,164 @@
          .addClass('active').siblings().removeClass('active')
       //在.tab-content 孩子元素中查找对应的元素，添加active，其他所有邻居元素移除active
     })
+  </script>
+  <script src="./vendors/av-min.js"></script>
+  <script>
+    var APP_ID = '6VgSKgCVd6rGXk9NI4hqQfO0-gzGzoHsz';
+    var APP_KEY = 'Bs6J1KXLot6ifnFwYqePHdDo';
+
+    AV.init({
+      appId: APP_ID,
+      appKey: APP_KEY
+    });
+    let $olSongs = $('ol#songs')
+    var query = new AV.Query('Song');
+    query.find().then(function (results) {
+      $('#songs-loading').remove()
+      // let array = results;
+      for( var i = 0; i < results.length; i++){
+        let song = results[i].attributes
+        let li = `
+          <li>
+            <h3>${song.name}<span>${song.reMark}</span></h3>
+            <p><svg class="icon icon-sq" aria-hidden="true"><use xlink:href="#icon-sq"></use></svg>${song.singer} - ${song.album}</p>
+            <a class="playButton" href="#">
+              <svg class="icon icon-play" aria-hidden="true"><use xlink:href="#icon-play"></use></svg>
+            </a>
+          </li>
+        `
+        $olSongs.append(li)
+      }
+    }, function (error) {
+      alert('获取歌曲失败')
+    });
+
+
+    // var SongObject = AV.Object.extend('Song');
+    // var songObject = new SongObject();
+    // songObject.save({
+    //   name: '时间都去哪儿了',
+    //   reMark: '(电影《时间去哪儿了》宣传曲)',
+    //   singer: '张信哲',
+    //   album: '时间都去哪儿了',
+    //   url: 'http://oxklvemx3.bkt.clouddn.com/%E6%97%B6%E9%97%B4%E9%83%BD%E5%8E%BB%E5%93%AA%E5%84%BF%E4%BA%86.mp3'
+    // }).then(function(object) {
+    //   alert('保存成功');
+    // })
+
+    // songObject.save({
+    //   name: '远走高飞',
+    //   reMark: '(合唱版)',
+    //   singer: '金志文 / 徐佳莹',
+    //   album: 'Hello 1',
+    //   url: 'http://oxklvemx3.bkt.clouddn.com/%E8%BF%9C%E8%B5%B0%E9%AB%98%E9%A3%9E.mp3'
+    // }).then(function(object) {
+    //   alert('保存成功');
+    // })
+
+    // songObject.save({
+    //   name: 'To Know You',
+    //   reMark: ' ',
+    //   singer: 'Do As Infinity',
+    //   album: 'To Know You',
+    //   url: 'http://oxklvemx3.bkt.clouddn.com/To%20Know%20You.mp3'
+    // }).then(function(object) {
+    //   alert('保存成功');
+    // })
+
+    // songObject.save({
+    //   name: '茶酒伴',
+    //   reMark: '(Live)',
+    //   singer: '陈鸿宇',
+    //   album: '音乐好朋友 第一季',
+    //   url: 'http://oxklvemx3.bkt.clouddn.com/%E8%8C%B6%E9%85%92%E4%BC%B4%20%28Live%29.mp3'
+    // }).then(function(object) {
+    //   alert('保存成功');
+    // })
+
+    // songObject.save({
+    //   name: '虽然前途未卜 我愿陪你吃土',
+    //   reMark: '(电影《羞羞的铁拳》插曲)',
+    //   singer: '金志文',
+    //   album: '虽然前途未卜 我愿陪你吃土',
+    //   url: 'http://oxklvemx3.bkt.clouddn.com/%E8%99%BD%E7%84%B6%E5%89%8D%E9%80%94%E6%9C%AA%E5%8D%9C%20%E6%88%91%E6%84%BF%E9%99%AA%E4%BD%A0%E5%90%83%E5%9C%9F.mp3'
+    // }).then(function(object) {
+    //   alert('保存成功');
+    // })
+
+    // songObject.save({
+    //   name: 'Pray',
+    //   reMark: ' ',
+    //   singer: 'Sam Smith',
+    //   album: 'Pray',
+    //   url: 'http://oxklvemx3.bkt.clouddn.com/Pray.mp3'
+    // }).then(function(object) {
+    //   alert('保存成功');
+    // })
+    
+    // songObject.save({
+    //   name: 'Help Me Out',
+    //   reMark: ' ',
+    //   singer: 'Maroon 5 / Julia Michaels',
+    //   album: 'Help Me Out',
+    //   url: 'http://oxklvemx3.bkt.clouddn.com/Help%20Me%20Out.mp3'
+    // }).then(function(object) {
+    //   alert('保存成功');
+    // })
+
+    // songObject.save({
+    //   name: 'Falling in love',
+    //   reMark: ' ',
+    //   singer: '金成利',
+    //   album: '보그맘 OST Part.4',
+    //   url: 'http://oxklvemx3.bkt.clouddn.com/Falling%20in%20love.mp3'
+    // }).then(function(object) {
+    //   alert('保存成功');
+    // })
+
+    // songObject.save({
+    //   name: 'How Long',
+    //   reMark: ' ',
+    //   singer: 'Charlie Puth',
+    //   album: 'How Long',
+    //   url: 'http://oxklvemx3.bkt.clouddn.com/How%20Long.mp3'
+    // }).then(function(object) {
+    //   alert('保存成功');
+    // })
+
+    // songObject.save({
+    //   name: '沈洁洁',
+    //   reMark: ' ',
+    //   singer: '冯提莫',
+    //   album: '沈洁洁',
+    //   url: 'http://oxklvemx3.bkt.clouddn.com/%E6%B2%88%E6%B4%81%E6%B4%81.mp3'
+    // }).then(function(object) {
+    //   alert('保存成功');
+    // })
+
+
+
+  </script>
+  <!-- <script>
+        let $olSongs = $('ol#songs')
+    var query = new AV.Query('Song');
+    query.find().then(function (results) {
+      for(var i = 0; i<results.length;i++){
+        let song = results[i].attributtes
+        let li = `
+          <li>
+            <h3>${song.name}<span>${song.reMark}</span></h3>
+            <p><svg class="icon icon-sq" aria-hidden="true"><use xlink:href="#icon-sq"></use></svg>${song.singer} - ${song.album}</p>
+            <a class="playButton" href="#">
+              <svg class="icon icon-play" aria-hidden="true"><use xlink:href="#icon-play"></use></svg>
+            </a>
+          </li>
+        `
+        $olSongs.append(li)
+      }
+  }, function (error) {
+      alert('获取歌曲失败')
+  }); -->
   </script>
 </body>
 
