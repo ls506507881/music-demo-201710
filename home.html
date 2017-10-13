@@ -305,7 +305,7 @@
     $('input#search').on('input',function(e){
     	let $input = $(e.currentTarget)
       let value = $input.val().trim()
-      if(value === ''){return}
+      if(value === ''){return $('#searchResult').empty()}
         var query = new AV.Query('Song');
         query.contains('name',value);
         query.find().then(function(results){
