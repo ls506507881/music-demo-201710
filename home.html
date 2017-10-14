@@ -302,28 +302,37 @@
       alert('获取歌曲失败')
     });
     
+    let timer = null
     $('input#search').on('input',function(e){
-    	let $input = $(e.currentTarget)
-      let value = $input.val().trim()
-      if(value === ''){return $('#searchResult').empty()}
-        var query = new AV.Query('Song');
-        query.contains('name',value);
-        query.find().then(function(results){
-          $('#searchResult').empty()
-          if(results.length===0){
-            $('#searchResult').html('没有结果')
-          }else{
-            for(var i = 0;i<results.length;i++){
-              let song = results[i].attributes
-              let li = `
-                <li data-id="${song.objectId}">
-                  ${song.name} - ${song.singer}
-                </li>
-              `
-              $('#searchResult').append(li)
-            }
-          }
-        })
+      if(timer){window.clearTimeout(timer)}
+        timer = setTimeout(function(){
+          let $input = $(e.currentTarget)
+          let value = $input.val().trim()
+          if(value === ''){return $('#searchResult').empty()}
+            var query1 = new AV.Query('Song');
+            query1.contains('name',value);
+            var query2 = new AV.Query('Song');
+            query2.contains('singer',value);
+            var query = AV.Query.or(query1, query2);
+            query.find().then(function(results){
+              $('#searchResult').empty()
+              if(results.length===0){
+                $('#searchResult').html('没有结果')
+              }else{
+                for(var i = 0;i<results.length;i++){
+                  let song = results[i].attributes
+                  let li = `
+                    <li data-id="${results[i].id}">
+                      <a href="./song.html?id=${results[i].id}">
+                        ${song.name} - ${song.singer}
+                      </a>
+                    </li>
+                  `
+                  $('#searchResult').append(li)
+                }
+              }
+            })
+        },400)
       })
     // var SongObject = AV.Object.extend('Song');
     // var songObject = new SongObject();
