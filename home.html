@@ -79,8 +79,8 @@
         <!-- 推荐歌单 -->
         <section class="playlists">
           <h2 class="sectionTitle">推荐歌单</h2>
-          <ol class="songs">
-            <li>
+          <ol id="playlists" class="songs">
+            <!-- <li>
               <div class="cover"><img src="http://oxkl41ihc.bkt.clouddn.com/%E5%B0%8F%E8%AF%B4.jpg" alt="封面"></div>
               <p>一本小说，一部电视剧，一片深情</p>
             </li>
@@ -103,7 +103,7 @@
             <li>
               <div class="cover"><img src="http://oxkl41ihc.bkt.clouddn.com/%E6%92%A9%E5%A6%B9.jpg" alt="封面"></div>
               <p>想撩妹？用这单就够了</p>
-            </li>
+            </li> -->
           </ol>
         </section>
         <!-- 最新音乐 -->
@@ -272,14 +272,10 @@
     })
   </script>
   <script src="./vendors/av-min.js"></script>
+  <script src="./scripts/av.js"></script>
   <script>
-    var APP_ID = '6VgSKgCVd6rGXk9NI4hqQfO0-gzGzoHsz';
-    var APP_KEY = 'Bs6J1KXLot6ifnFwYqePHdDo';
 
-    AV.init({
-      appId: APP_ID,
-      appKey: APP_KEY
-    });
+// 最新音乐
     let $olSongs = $('ol#songs')
     var query = new AV.Query('Song');
     query.find().then(function (results) {
@@ -301,6 +297,25 @@
     }, function (error) {
       alert('获取歌曲失败')
     });
+
+// 推荐歌单
+    let $olPlaylists = $('ol#playlists')
+    var query66 = new AV.Query('Playlist');
+    query66.find().then(function (results) {
+      for( var i = 0; i < results.length; i++){
+        let musicList = results[i].attributes
+        let li = `
+        <li>
+              <div class="cover"><img src="${musicList.url}" alt="封面"></div>
+              <p>${musicList.musicListName}</p>
+        </li>
+        `
+        $olPlaylists.append(li)
+      }
+    }, function (error) {
+      alert('获取歌单失败')
+    });
+
     
     let timer = null
     $('input#search').on('input',function(e){
@@ -334,6 +349,62 @@
             })
         },400)
       })
+// ------------------------上传推荐歌单------------------------
+    // var PlaylastObject = AV.Object.extend('Playlist');
+    // var playlastObject = new PlaylastObject();
+    // playlastObject.save({
+    //   musicListName: '一本小说，一部电视剧，一片深情',
+    //   url: 'http://oxkl41ihc.bkt.clouddn.com/%E5%B0%8F%E8%AF%B4.jpg'
+    // }).then(function(object) {
+    //   alert('保存成功');
+    // })
+    // var PlaylastObject = AV.Object.extend('Playlist');
+    // var playlastObject = new PlaylastObject();
+    // playlastObject.save({
+    //   musicListName: '华语丨你的誓言 也不过是你说的口是心非',
+    //   url: 'http://oxkl41ihc.bkt.clouddn.com/%E8%AA%93%E8%A8%80.jpg'
+    // }).then(function(object) {
+    //   alert('保存成功');
+    // })
+
+    // var PlaylastObject = AV.Object.extend('Playlist');
+    // var playlastObject = new PlaylastObject();
+    // playlastObject.save({
+    //   musicListName: '吉他配民谣：孤独旅人的暖心良药',
+    //   url: 'http://oxkl41ihc.bkt.clouddn.com/%E6%B0%91%E8%B0%A3.jpg'
+    // }).then(function(object) {
+    //   alert('保存成功');
+    // })
+
+    // var PlaylastObject = AV.Object.extend('Playlist');
+    // var playlastObject = new PlaylastObject();
+    // playlastObject.save({
+    //   musicListName: '华语 | 我可以忘记一切，却忘不了你的出现',
+    //   url: 'http://oxkl41ihc.bkt.clouddn.com/%E5%BF%98%E8%AE%B0.jpg'
+    // }).then(function(object) {
+    //   alert('保存成功');
+    // })
+
+    // var PlaylastObject = AV.Object.extend('Playlist');
+    // var playlastObject = new PlaylastObject();
+    // playlastObject.save({
+    //   musicListName: '「华语」哭泣使人乞讨，思念使人奔跑',
+    //   url: 'http://oxkl41ihc.bkt.clouddn.com/%E6%80%9D%E5%BF%B5.jpg'
+    // }).then(function(object) {
+    //   alert('保存成功');
+    // })
+
+    // var PlaylastObject = AV.Object.extend('Playlist');
+    // var playlastObject = new PlaylastObject();
+    // playlastObject.save({
+    //   musicListName: '想撩妹？用这单就够了',
+    //   url: 'http://oxkl41ihc.bkt.clouddn.com/%E6%92%A9%E5%A6%B9.jpg'
+    // }).then(function(object) {
+    //   alert('保存成功');
+    // })
+    
+
+    // -----------------------上传歌曲----------------
     // var SongObject = AV.Object.extend('Song');
     // var songObject = new SongObject();
     // songObject.save({
@@ -438,27 +509,6 @@
 
 
 
-  </script>
-  <!-- <script>
-        let $olSongs = $('ol#songs')
-    var query = new AV.Query('Song');
-    query.find().then(function (results) {
-      for(var i = 0; i<results.length;i++){
-        let song = results[i].attributtes
-        let li = `
-          <li>
-            <h3>${song.name}<span>${song.reMark}</span></h3>
-            <p><svg class="icon icon-sq" aria-hidden="true"><use xlink:href="#icon-sq"></use></svg>${song.singer} - ${song.album}</p>
-            <a class="playButton" href="#">
-              <svg class="icon icon-play" aria-hidden="true"><use xlink:href="#icon-play"></use></svg>
-            </a>
-          </li>
-        `
-        $olSongs.append(li)
-      }
-  }, function (error) {
-      alert('获取歌曲失败')
-  }); -->
   </script>
 </body>
 

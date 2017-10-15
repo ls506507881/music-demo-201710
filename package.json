@@ -11,6 +11,7 @@
   "dependencies": {
     "jquery": "^3.2.1",
     "leancloud-storage": "^3.2.1",
-    "loaders.css": "^0.1.2"
+    "loaders.css": "^0.1.2",
+    "query-string": "^5.0.0"
   }
 }

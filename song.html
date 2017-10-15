@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./reset.css">
+    <title>播放</title>
+    <style>
+        .page{
+            height: 100vh;
+            position: relative;
+        }
+        .page::before{
+            content: "";
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background: transparent url(//oxkl41ihc.bkt.clouddn.com/%E6%B2%88%E6%B4%81%E6%B4%81.jpg)
+            no-repeat center;
+            background-size: cover;
+            filter: blur(50px) brightness(.3);
+            position: absolute;
+            z-index: -1;
+        }
+        section.pointer{}
+        section.disk{
+            margin-top: 20px;
+        }
+        section.disk .circle{
+            width: 248px;
+            height: 248px;
+            margin: 0 auto;            
+            position: relative;
+        }
+        section.disk .circle::before{
+            content: "";
+            background: transparent url(//oxkl41ihc.bkt.clouddn.com/disc.png)
+            no-repeat center;
+            background-size: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        section.disk .circle::after{
+            content: "";
+            background: transparent url(//oxkl41ihc.bkt.clouddn.com/disc_light.png)
+            no-repeat center;
+            background-size: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        section.disk .circle > img{
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -75px;
+            margin-top: -75px;
+            border-radius: 50%;
+        }
+        section.disk .circle.playing > img,
+        section.disk .circle.playing::after{
+            animation: spin 10s linear infinite;
+        }
+        section.disk .circle.playing.pause > img,
+        section.disk .circle.playing.pause::after{
+            animation-play-state: paused;
+        }
+        section.lyric{}
+        section.actions{}
+        @keyframes spin{
+            0%{
+                transform: rotateZ(0deg);
+            }
+            100%{
+                transform: rotateZ(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <section class="pointer"></section>
+        <section class="disk">
+            <div class="circle playing">
+                <img src="//oxkl41ihc.bkt.clouddn.com/%E6%B2%88%E6%B4%81%E6%B4%81.jpg"  alt="封面">
+            </div>
+        </section>
+        <section class="lyric"></section>
+        <section class="actions"></section>
+    </div>
+    <script src="./vendors/jquery.min.js"></script>
+    <script src="./vendors/av-min.js"></script>
+    <script src="./scripts/av.js"></script>
+    <script>
+        function getParameterByName(name,url){
+            if(!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g,"\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if(!results) return null;
+            if(!results[2]) return ' ';
+            return decodeURIComponent(results[2].replace(/\+/g," "));
+        }
+    </script>
+    <script>
+        let id = getParameterByName('id');
+        var query = new AV.Query('Song');
+        query.get(id).then(function (song) {
+            let {url,lyric} = song.attributes
+            let video = document.createElement('video')
+            video.src = url
+            video.play()
+            let array = []
+            let parts = lyric.split('\n')
+            parts.forEach(function(string,index) {
+                let xxx = string.split(']')
+                xxx[0]=xxx[0].substring(i)
+                let regex = /(\d+):([\d.]+)/
+                let matches = xxx[0].match(regex)
+                let minute = +matches[1]
+                let seconds = + matches[2]
+                array.push({
+                    time: minute*60+seconds,
+                    lyric: xxx[1]
+                })
+            });
+            setInterval(function(){
+                let current = video.currentTime
+                for(let i = 0;i<array.length;i++){
+                    if(i ===array.length - 1){
+                        console.log(array[i].lyric)
+                    }else if(array[i].time <= current && array[i+1].time>current){
+                        console.log(array[i].lyric)
+                        break;
+                    }
+                }
+            })
+            console.log(parts)
+            console.log(lyric)
+            setInterval(function(){
+                console.log(video.currentTime)
+            },1000) //每一秒知道播的时间多长
+        })
+    </script>
+</body>
+</html>
