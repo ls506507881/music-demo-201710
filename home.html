@@ -284,12 +284,14 @@
       for( var i = 0; i < results.length; i++){
         let song = results[i].attributes
         let li = `
-          <li>
+          <li>    
+          <a href="./song.html?id=${results[i].id}">
             <h3>${song.name}<span>${song.reMark}</span></h3>
             <p><svg class="icon icon-sq" aria-hidden="true"><use xlink:href="#icon-sq"></use></svg>${song.singer} - ${song.album}</p>
-            <a class="playButton" href="#">
+            <div class="playButton" href="#">
               <svg class="icon icon-play" aria-hidden="true"><use xlink:href="#icon-play"></use></svg>
-            </a>
+            </div>
+          </a>
           </li>
         `
         $olSongs.append(li)
