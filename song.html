@@ -24,9 +24,14 @@
             position: absolute;
             z-index: -1;
         }
-        section.pointer{}
+        section.pointer>img{
+            width: 84px;
+            position: absolute;
+            left: 45%;
+            z-index: 1;
+        }
         section.disk{
-            margin-top: 20px;
+            padding-top: 63px;
         }
         section.disk .circle{
             width: 248px;
@@ -36,7 +41,7 @@
         }
         section.disk .circle::before{
             content: "";
-            background: transparent url(http://oxkl41ihc.bkt.clouddn.com/disc.png)
+            background: transparent url(http://oxkl41ihc.bkt.clouddn.com/disc.png) 
             no-repeat center;
             background-size: cover;
             position: absolute;
@@ -74,8 +79,74 @@
         section.disk .circle.playing.pause::after{
             animation-play-state: paused;
         }
-        section.lyric{}
-        section.actions{}
+        section.song-description{
+            margin-top: 25px;
+            padding: 0 35px;
+            text-align: center;
+        }
+        section.song-description > h2{
+            font-size: 15px;
+            line-height: 1.1;
+            color: #fff;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            
+        }
+        section.song-description > h2 > small{
+            font-size: 13px;
+            color: #BCB69B;
+        }
+        section.song-description>.lyric{
+            height: 72px;
+            margin-top: 14px;
+            overflow: hidden;
+            /* border: 1px solid red; */
+        }
+        section.song-description>.lyric .scroll p{
+            font-size: 13px;
+            line-height: 1.5;
+            color: #B4A8A1;
+            padding-bottom: 5px;
+        }
+        section.song-description>.lyric p.active{
+            color: #fff;
+        }
+
+        section.actions{
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            padding: 0 35px;
+            display: flex;
+        }
+        section.actions a{
+            flex: 1 1 auto;
+            border: 1px solid red;
+            border-radius: 5px;
+            margin-left: 12px;
+        }
+        section.actions .btn{
+            height: 36px;
+            line-height: 36px;
+            padding: 0 6px;
+            border: 1px solid #adadad;
+            border-radius: 4px;
+            font-size: 15px;
+            box-sizing: content-box;
+            text-align: center;
+        }
+        section.actions .btn:first-child{
+            margin-left: 0;
+            color: #d43b32;
+            border-color: #d43b32;
+        }
+        section.actions .btn:last-child{
+            background-color: #d43b32;
+            border-color: #d43b32;
+            color: #fff;
+        }
         @keyframes spin{
             0%{
                 transform: rotateZ(0deg);
@@ -88,14 +159,29 @@
 </head>
 <body>
     <div class="page">
-        <section class="pointer"></section>
+        <section class="pointer">
+            <img src="http://oxkl41ihc.bkt.clouddn.com/needle.png" alt="">
+        </section>
         <section class="disk">
             <div class="circle playing">
                 <img src="http://oxkl41ihc.bkt.clouddn.com/%E6%B2%88%E6%B4%81%E6%B4%81.jpg"  alt="封面">
             </div>
         </section>
-        <section class="lyric"></section>
-        <section class="actions"></section>
+        <section class="song-description">
+            <h2>
+                <span>时间都去哪儿了</span>
+                <span>-</span>
+                <small>张信哲</small>
+            </h2>
+            <div class="lyric">
+                <div class="scroll">
+                </div>
+            </div>
+        </section>
+        <section class="actions">
+            <a class="btn">打 开</a>
+            <a class="btn">下 载</a>            
+        </section>
     </div>
     <script src="./vendors/jquery.min.js"></script>
     <script src="./vendors/av-min.js"></script>
@@ -123,33 +209,80 @@
             let parts = lyric.split('\n')
             parts.forEach(function(string,index) {
                 let xxx = string.split(']')
-                xxx[0]=xxx[0].substring(i)
+                xxx[0] = xxx[0].substring(1)
                 let regex = /(\d+):([\d.]+)/
                 let matches = xxx[0].match(regex)
                 let minute = +matches[1]
-                let seconds = + matches[2]
+                let seconds = +matches[2]
                 array.push({
                     time: minute*60+seconds,
                     lyric: xxx[1]
                 })
             });
-            setInterval(function(){
-                let current = video.currentTime
-                for(let i = 0;i<array.length;i++){
-                    if(i ===array.length - 1){
-                        console.log(array[i].lyric)
-                    }else if(array[i].time <= current && array[i+1].time>current){
-                        console.log(array[i].lyric)
-                        break;
-                    }
-                }
-            })
-            console.log(parts)
-            console.log(lyric)
-            setInterval(function(){
-                console.log(video.currentTime)
-            },1000) //每一秒知道播的时间多长
+
+            //把歌词添加到页面上
+            array.map(function(object){
+                    if(!object){return}
+                    let $scroll = $('.scroll')
+                    let $p=$('<p/>')
+                    $p.attr('data-time',object.time).text(object.lyric)
+                    $p.appendTo($scroll)
+                })
         })
+            // setInterval(function(){
+            //     let $lyric = $('.lyric')
+            //     let current = video.currentTime
+            //     for(var i=0;i<array.length;i++){
+            //         if( i === array.length -1){
+            //             array[i].time.find().addClass('active')
+            //         }else if(array[i].time <= current && array[i+1].time>current){
+            //             console.log(array[i].time)
+            //             break;
+            //         }
+            //     }
+            // },500)
+        
+        //     let $lyric = $('.lyric')
+        //     array.map(function(object){
+        //         if(!object){return}
+        //         let $p=$('<p/>')
+        //         $p.attr('data-time',object.time).text(object.words)
+        //         $p.appendTo($lyric)
+        //     })
+        // })
+
+
+        //     let array = []
+        //     let parts = lyric.split('\n')
+        //     parts.forEach(function(string,index) {
+        //         let xxx = string.split(']')
+        //         xxx[0]=xxx[0].substring(i)
+        //         let regex = /(\d+):([\d.]+)/
+        //         let matches = xxx[0].match(regex)
+        //         let minute = +matches[1]
+        //         let seconds = + matches[2]
+        //         array.push({
+        //             time: minute*60+seconds,
+        //             lyric: xxx[1]
+        //         })
+        //     });
+        //     setInterval(function(){
+        //         let current = video.currentTime
+        //         for(let i = 0;i<array.length;i++){
+        //             if(i ===array.length - 1){
+        //                 console.log(array[i].lyric)
+        //             }else if(array[i].time <= current && array[i+1].time>current){
+        //                 console.log(array[i].lyric)
+        //                 break;
+        //             }
+        //         }
+        //     })
+        //     console.log(parts)
+        //     console.log(lyric)
+        //     setInterval(function(){
+        //         console.log(video.currentTime)
+        //     },1000) //每一秒知道播的时间多长
+        // })
     </script>
 </body>
 </html>
