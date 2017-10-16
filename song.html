@@ -79,6 +79,7 @@
         section.disk .circle.playing.pause::after{
             animation-play-state: paused;
         }
+
         section.song-description{
             margin-top: 25px;
             padding: 0 35px;
@@ -98,6 +99,7 @@
             color: #BCB69B;
         }
         section.song-description>.lyric{
+            transition: transform 0.3s;
             height: 72px;
             margin-top: 14px;
             overflow: hidden;
@@ -228,20 +230,32 @@
                     $p.attr('data-time',object.time).text(object.lyric)
                     $p.appendTo($scroll)
                 })
-        })
-            // setInterval(function(){
-            //     let $lyric = $('.lyric')
-            //     let current = video.currentTime
-            //     for(var i=0;i<array.length;i++){
-            //         if( i === array.length -1){
-            //             array[i].time.find().addClass('active')
-            //         }else if(array[i].time <= current && array[i+1].time>current){
-            //             console.log(array[i].time)
-            //             break;
-            //         }
-            //     }
-            // },500)
-        
+
+            setInterval(function(){
+                let $scrolls = $('.scroll>p')
+                let current = video.currentTime
+                let $whichLine
+                for(var i=0;i<array.length;i++){
+                    let currentLineTime = array[i].time;
+                    let nextLineTime = array[i+1].time
+                    if( i === array.length -1){
+                        // console.log(array[i].time)
+                        $whichLine = $scrolls[i]
+                    }else if( array[i+1] !=undefined && currentLineTime <= current && nextLineTime >current){
+                        $whichLine = $scrolls.eq(i)
+                        break;
+                    }
+                }
+                if($whichLine){
+                    $whichLine.addClass('active').prev().removeClass('active')
+                    let top = $whichLine.offset().top
+                    let scrollTop = $('.scroll').offset().top
+                    let delta = top - scrollTop -  $('.lyric').height()/3
+                    $('.scroll').css('transform',`translateY(-${delta}px)`)
+
+                }
+            },500)
+        })      
         //     let $lyric = $('.lyric')
         //     array.map(function(object){
         //         if(!object){return}
