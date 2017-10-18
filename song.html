@@ -189,6 +189,7 @@
     <script src="./vendors/av-min.js"></script>
     <script src="./scripts/av.js"></script>
     <script>
+        //获取id
         function getParameterByName(name,url){
             if(!url) url = window.location.href;
             name = name.replace(/[\[\]]/g,"\\$&");
@@ -231,29 +232,29 @@
                     $p.appendTo($scroll)
                 })
 
-            // setInterval(function(){
-            //     let $scrolls = $('.scroll>p')
-            //     let current = video.currentTime
-            //     let $whichLine
-            //     for(var i=0;i<array.length;i++){
-            //         let currentLineTime = array[i].time;
-            //         let nextLineTime = array[i+1].time;
-            //         if( i === array.length -1){
-            //             // console.log(array[i].time)
-            //             $whichLine = $scrolls[i]
-            //         }else if( array[i+1] !=undefined && currentLineTime <= current && nextLineTime >current){
-            //             $whichLine = $scrolls.eq(i)
-            //             break;
-            //         }
-            //     }
-            //     if($whichLine){
-            //         $whichLine.addClass('active').prev().removeClass('active')
-            //         let top = $whichLine.offset().top
-            //         let scrollTop = $('.scroll').offset().top
-            //         let delta = top - scrollTop -  $('.lyric').height()/3
-            //         $('.scroll').css('transform',`translateY(-${delta}px)`)
-            //     }
-            // },500)
+            setInterval(function(){
+                let $scrolls = $('.scroll>p')
+                let current = video.currentTime
+                let $whichLine;
+                for(var i=0;i<array.length;i++){
+                    let currentLineTime = $scrolls.eq(i).attr('data-time');
+                    let nextLineTime = $scrolls.eq(i+1).attr('data-time');
+                    if( i === array.length -1){
+                        // console.log(array[i].time)
+                        $whichLine = $scrolls.eq(i)
+                    }else if( array[i+1] !=undefined && currentLineTime <= current && nextLineTime >current){
+                        $whichLine = $scrolls.eq(i)
+                        break;
+                    }
+                }
+                if($whichLine){
+                    $whichLine.addClass('active').prev().removeClass('active')
+                    let top = $whichLine.offset().top
+                    let scrollTop = $('.scroll').offset().top
+                    let delta = top - scrollTop -  $('.lyric').height()/3
+                    $('.scroll').css('transform',`translateY(-${delta}px)`)
+                }
+            },500)
         })
     </script>
 </body>
