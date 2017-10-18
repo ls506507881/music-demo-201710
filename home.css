@@ -27,7 +27,7 @@ body{
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1;
+    z-index: 3;
     background: #fff;
 }
 section.topbar{
@@ -183,7 +183,7 @@ section.songs > .list > li{
     padding-bottom: 8px;
     border-bottom: 1px solid #E2E2E3;
 }
-section.songs > .list .playButton{
+.playButton{
     position: absolute;
     right: 8px;
     top: 50%;
@@ -230,4 +230,48 @@ section.art .copyright{
     transform: scale(.75)
 }
 
+/* 第二页 */
+.page-2{
+    width: 100%;
+    height: 100%;
+  }
+.page-2>.banner{
+    background: url(//oxkl41ihc.bkt.clouddn.com/hot_music_bg_2x.jpg) no-repeat;
+    padding-top: 38.9%;
+    background-size: cover;
+    position: relative;
+}
+.page-2>.banner>.info{
+    position: absolute;
+    top: 15;
+    left: 20;
+    z-index: 2;
+    width: 142px;
+}
+.page-2>.banner>.info>img{
+    width: 142px;
+}
+.page-2>.banner::after{
+    content: "";
+    background: rgba(0, 0, 0, .2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.page-2>.banner>.info>.updateTime{
+    font-size: 12px;
+    transform: scale(.91);
+    -webkit-transform: scale(.91);
+    -moz-transform: scale(.91);
+    margin-top: 10px;
+    margin-left: -6px;
+    color: #fff;
+}
+.hotList{
 
+}
+.hotsong{
+
+}
