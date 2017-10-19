@@ -126,6 +126,37 @@ section.playlists > ol.songs{
     justify-content: space-between; /*两边布局*/
     font-size: 13px;
 }
+.cover{
+    position: relative;
+}
+.cover >.amount{
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 2;
+    padding-left: 13px;
+    color: #fff;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 3px;
+    padding-right: 5px;
+    width: 100%;
+}
+.cover >.amount .icon-listen{
+    margin-top: 2px;
+    margin-right: 3px;
+}
+.cover >.amount::after {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 20px;
+    z-index: -1;
+    background-image: linear-gradient(180deg,rgba(0,0,0,.2),transparent);
+    padding: 0;
+} 
 section.playlists > ol.songs .cover > img{
     /* height: 105px; */
 }
@@ -133,7 +164,7 @@ section.playlists > ol.songs>li{
     width: 32.8%;
     margin: 8px 0;
 }
-section.playlists > ol.songs>li p{
+section.playlists > ol.songs>li>p{
     padding: 6px 2px 0 6px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -269,9 +300,147 @@ section.art .copyright{
     margin-left: -6px;
     color: #fff;
 }
-/* .hotList{
+section.songs > #hotsongs{
+    margin-top: 0;
+}
+.hotlist{
+    margin-left: 28px;
+}
+.hotlist .num{
+    position: absolute;
+    top: 50%;
+    left: -6%;
+    color: #999;
+    font-size: 17px;
+    transform: translate(-50%,-50%)
+}
+.hotlist .hotnum{
+    color: #df3436;
+}
+section.hotdn{
+    height: 55px;
+    line-height: 55px;
+    text-align: center;
+}
+section.hotdn > a{
+    font-size: 14px;
+    color: #999;
+}
+
+
+/* 第三页搜索 */
+.page-3 >.inputWrapper {
+    position: relative;
+    width: 94.6%;
+    height: 30px;
+    padding: 0 30px;
+    box-sizing: border-box;
+    background: #ebecec;
+    border-radius: 30px;
+    text-align: center;
+    margin: 15px auto;
+    color: #c9c9c9;
+}
+.page-3 >.inputWrapper .magnifier{
+    position: absolute;
+    top: 7px;
+    left: 8px;
+}
+.page-3 >.inputWrapper .close{
+    position: absolute;
+    top: 7px;
+    right: 8px;
+    color: #999;
+}
+.page-3 input {
+    width: 100%;
+    height: 30px;
+    line-height: 18px;
+    background: transparent;
+    font-size: 14px;
+    color: #333;
+    border: 0;
+    outline: none;
+}
+.page-3 >.inputWrapper > label.holder{
+    position: absolute;
+    left: 30px;
+    top: 5px;
+    font-size: 14px;
+    color: #c9c9c9;
+    background: transparent;
+    pointer-events: none;
+}
+.page-3 > .hotsearch{
+    padding: 15px 10px 0;
+    border-top: 1px solid #efefef;
+}
+.page-3 > .hotsearch > .title{
+    font-size: 12px;
+    line-height: 12px;
+    color: #666;
+}
+.page-3 .panel{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+.page-3 .panel > a{
+    padding: 0px 14px;
+    border: 1px solid #efefef;
+    border-radius: 32px;
+    display: inline-block;
+    height: 32px;
+    line-height: 32px;
+    margin-top: 8px;
+    margin-right: 8px;
+    font-size: 14px;
+    color: #333;
+}
+.page-3 >.searchText{
+    border-top: 1px solid #efefef;
+}
+.page-3 >.searchText > .searchCont{
+    line-height: 50px;
+    color: #507daf;
+    font-size: 15px;
+    margin-left: 10px;
+    border-bottom: 1px solid #efefef;
+}
+#searchResult{
+    line-height: 45px;
+    color: #333;
+    margin-left: 10px;
+}
+#searchResult li{
+    display: flex;
+    align-items: center;
+}
+#searchResult li a{
+    border-bottom: 1px solid #efefef;
+    display: inline-block;
+    flex: 1;
+}
+#searchResult > li > svg{
+    color: #999;
+    margin-right: 7px;
+}
+.active{
+    display: block;
+}
+.hide{
+    display: none;
+}
+/* .searchText{
+    height: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 15px;
+    line-height: 50px;
+    color: #507daf;
+    border-top: 1px solid #e4e5e6;
+    display: none;
+} */
+.searchResult{
 
 }
-.hotsong{
-
-} */
