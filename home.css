@@ -420,6 +420,9 @@ section.hotdn > a{
     border-bottom: 1px solid #efefef;
     display: inline-block;
     flex: 1;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
 }
 #searchResult > li > svg{
     color: #999;

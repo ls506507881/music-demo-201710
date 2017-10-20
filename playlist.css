@@ -71,4 +71,11 @@
     line-height: 19px;
     color: #666;
     font-size: 14px;
+    padding-bottom: 20px;
+}
+.plIntroHide{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
 }

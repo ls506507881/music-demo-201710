@@ -165,7 +165,7 @@
         </section>
         <section class="songs">
             <ol id="hotsongs" class="list hotlist">
-            <li>
+            <!-- <li>
             <a href="./song.html?id=59dbd33867f35600420b8d18">
               <div class="num hotnum">01</div>
               <h3>时间都去哪儿了<span>(电影《时间去哪儿了》宣传曲)</span></h3>
@@ -264,7 +264,7 @@
                 <svg class="icon icon-play" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-play"></use></svg>
               </div>
             </a>
-            </li>
+            </li> -->
           </ol>
           </section>
         <section class="hotdn">
@@ -329,27 +329,52 @@
 // 最新音乐
     let $olSongs = $('ol#songs')
     var query = new AV.Query('Song');
-    query.find().then(function (results) {
+    var cql = 'select * from Song where hot != true';
+    AV.Query.doCloudQuery(cql).then(function (data) {
       $('#songs-loading').remove()
-      // let array = results;
-      for( var i = 0; i < results.length; i++){
-        let song = results[i].attributes
-        let li = `
-          <li>
-          <a href="./song.html?id=${results[i].id}">
-            <h3>${song.name}<span>${song.reMark}</span></h3>
-            <p><svg class="icon icon-sq" aria-hidden="true"><use xlink:href="#icon-sq"></use></svg>${song.singer} - ${song.album}</p>
-            <div class="playButton" href="#">
-              <svg class="icon icon-play" aria-hidden="true"><use xlink:href="#icon-play"></use></svg>
-            </div>
-          </a>
-          </li>
-        `
-        $olSongs.append(li)
-      }
-    }, function (error) {
-      alert('获取歌曲失败')
-    });
+          var results = data.results;
+          for( var i = 0; i < results.length; i++){
+            let song = results[i].attributes
+            let li = `
+              <li>
+              <a href="./song.html?id=${results[i].id}">
+                <h3>${song.name}<span>${song.reMark}</span></h3>
+                <p><svg class="icon icon-sq" aria-hidden="true"><use xlink:href="#icon-sq"></use></svg>${song.singer} - ${song.album}</p>
+                <div class="playButton" href="#">
+                  <svg class="icon icon-play" aria-hidden="true"><use xlink:href="#icon-play"></use></svg>
+                </div>
+              </a>
+              </li>
+            `
+            $olSongs.append(li)
+          }
+      }, function (error) {
+        console.log('获取最新音乐出错')
+      });
+
+    // let $olSongs = $('ol#songs')
+    // var query = new AV.Query('Song');
+    // query.find().then(function (results) {
+    //   $('#songs-loading').remove()
+    //   // let array = results;
+    //   for( var i = 0; i < results.length; i++){
+    //     let song = results[i].attributes
+    //     let li = `
+    //       <li>
+    //       <a href="./song.html?id=${results[i].id}">
+    //         <h3>${song.name}<span>${song.reMark}</span></h3>
+    //         <p><svg class="icon icon-sq" aria-hidden="true"><use xlink:href="#icon-sq"></use></svg>${song.singer} - ${song.album}</p>
+    //         <div class="playButton" href="#">
+    //           <svg class="icon icon-play" aria-hidden="true"><use xlink:href="#icon-play"></use></svg>
+    //         </div>
+    //       </a>
+    //       </li>
+    //     `
+    //     $olSongs.append(li)
+    //   }
+    // }, function (error) {
+    //   alert('获取歌曲失败')
+    // });
 
 // 推荐歌单
     let $olPlaylists = $('ol#playlists')
@@ -377,6 +402,50 @@
     }, function (error) {
       alert('获取歌单失败')
     });
+
+    // 热门音乐排行
+    let $olhotSongs = $('ol#hotsongs')
+    var queryhot = new AV.Query('Song');
+    var cqltrue = 'select * from Song where hot = true';
+    AV.Query.doCloudQuery(cqltrue).then(function (data) {
+      var results = data.results;
+      // let array = results;
+      for( var i = 0; i < results.length; i++){
+        let song = results[i].attributes
+        if(i<3){
+          let li = `
+          <li>
+            <a href="./song.html?id=${results[i].id}">
+              <div class="num hotnum">${[i+1]}</div>
+              <h3>${song.name}<span>${song.reMark}</span></h3>
+              <p><svg class="icon icon-sq" aria-hidden="true"><use xlink:href="#icon-sq"></use></svg>${song.singer} - ${song.album}</p>
+              <div class="playButton" href="#">
+                <svg class="icon icon-play" aria-hidden="true"><use  xlink:href="#icon-play"></use></svg>
+              </div>
+            </a>
+          </li>
+        `
+        $olhotSongs.append(li)
+        }else{
+          let li = `
+          <li>
+            <a href="./song.html?id=${results[i].id}">
+              <div class="num">${[i+1]}</div>
+              <h3>${song.name}<span>${song.reMark}</span></h3>
+              <p><svg class="icon icon-sq" aria-hidden="true"><use xlink:href="#icon-sq"></use></svg>${song.singer} - ${song.album}</p>
+              <div class="playButton" href="#">
+                <svg class="icon icon-play" aria-hidden="true"><use  xlink:href="#icon-play"></use></svg>
+              </div>
+            </a>
+          </li>
+        `
+        $olhotSongs.append(li)
+        }
+      }
+    }, function (error) {
+      alert('获取热门歌曲失败')
+    });
+
     let timer = null
     $('input#search').on('input',function(e){
       if(timer){window.clearTimeout(timer)}
