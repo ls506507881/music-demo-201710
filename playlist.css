@@ -1,0 +1,74 @@
+.plWarp{
+    height: 100vh;
+}
+.plTop{
+    overflow: hidden;
+    padding: 30px 10px 30px 15px;
+    position: relative;
+}
+.plTopbg{
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: url(//oxkl41ihc.bkt.clouddn.com/%E5%BF%98%E8%AE%B0.jpg) no-repeat;
+    filter: blur(20px);
+    position: absolute;
+    transform: scale(1.5);
+    background-position: 50%;
+    background-size: cover;
+}
+.plTopbg::after{
+    content: " ";
+    background-color: rgba(0,0,0,.25);
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+.formDate{
+    position: relative;
+    width: 100%;
+    display: flex;
+    z-index: 2;
+}
+.fromCover > img{
+    width: 114px;
+    height: 114px;
+}
+.fromTitle{
+    margin-left: 16px;
+}
+.fromTitle > h2{
+    font-size: 17px;
+    color: #fff;
+    line-height: 1.3;
+    padding-top: 1px;
+}
+.fromTitle > .avatar{
+    margin-top: 20px;
+}
+.fromTitle > .avatar > a{
+    display: flex;
+    align-items: center;
+}
+.fromTitle > .avatar img{
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+}
+.fromTitle > .avatar span{
+    font-size: 14px;
+    color: #B7B7B7;
+}
+.plIntro{
+    position: relative;
+    margin: 0 15px 0 10px;
+    padding-top: 10px;
+    line-height: 19px;
+    color: #666;
+    font-size: 14px;
+}

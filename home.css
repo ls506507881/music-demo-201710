@@ -164,7 +164,7 @@ section.playlists > ol.songs>li{
     width: 32.8%;
     margin: 8px 0;
 }
-section.playlists > ol.songs>li>p{
+section.playlists > ol.songs>li>a>p{
     padding: 6px 2px 0 6px;
     display: -webkit-box;
     -webkit-box-orient: vertical;

@@ -11,18 +11,25 @@
             height: 100vh;
             position: relative;
         }
-        .page::before{
+        .pagebg{
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            background: transparent url(//oxkl41ihc.bkt.clouddn.com/%E8%BF%9C%E8%B5%B0%E9%AB%98%E9%A3%9E.jpg)
+            no-repeat center;
+            background-size: cover;
+            filter: blur(20px) brightness(.3);
+            z-index: -1;
+        }
+        .pagebg::after{
             content: "";
             height: 100%;
             width: 100%;
             top: 0;
             left: 0;
-            background: transparent url(//oxkl41ihc.bkt.clouddn.com/%E6%B2%88%E6%B4%81%E6%B4%81.jpg)
-            no-repeat center;
-            background-size: cover;
-            filter: blur(50px) brightness(.3);
-            position: absolute;
-            z-index: -1;
+            background-color: rgba(0,0,0,.5);
         }
         section.pointer>img{
             width: 84px;
@@ -161,19 +168,17 @@
 </head>
 <body>
     <div class="page">
+        <div id="pagebg">
+        </div>
         <section class="pointer">
             <img src="//oxkl41ihc.bkt.clouddn.com/needle.png" alt="">
         </section>
         <section class="disk">
-            <div class="circle playing">
-                <img src="//oxkl41ihc.bkt.clouddn.com/%E6%B2%88%E6%B4%81%E6%B4%81.jpg"  alt="封面">
+            <div id="playCover" class="circle playing">
             </div>
         </section>
         <section class="song-description">
-            <h2>
-                <span>时间都去哪儿了</span>
-                <span>-</span>
-                <small>张信哲</small>
+            <h2 id="des-name">
             </h2>
             <div class="lyric">
                 <div class="scroll">
@@ -182,7 +187,7 @@
         </section>
         <section class="actions">
             <a class="btn">打 开</a>
-            <a class="btn">下 载</a>            
+            <a class="btn">下 载</a>
         </section>
     </div>
     <script src="./vendors/jquery.min.js"></script>
@@ -199,8 +204,7 @@
             if(!results[2]) return ' ';
             return decodeURIComponent(results[2].replace(/\+/g," "));
         }
-    </script>
-    <script>
+
         let id = getParameterByName('id');
         var query = new AV.Query('Song');
         query.get(id).then(function (song) {
@@ -221,6 +225,31 @@
                     time: minute*60+seconds,
                     lyric: xxx[1]
                 })
+            });
+
+            //歌曲
+            var $deSname = $('#des-name')
+            var $playCover = $('#playCover')
+            var $playbg = $('#pagebg')
+            var querysong = new AV.Query('Song');
+            querysong.find().then(function (results) {
+                let {name,singer,cover} = song.attributes
+                let h2 = `
+                <span>${name}</span>
+                <span>-</span>
+                <small>${singer}</small>
+                `
+                let img = `
+                    <img src="${cover}" alt="封面">
+                `
+                let pagebg = `
+                    <div class="pagebg" style="background: transparent url(${cover}) no-repeat center;"></div>
+                `
+                $deSname.append(h2)
+                $playCover.append(img)
+                $playbg.append(pagebg)
+            }, function (error) {
+            alert('获取歌名标题失败')
             });
 
             //把歌词添加到页面上
