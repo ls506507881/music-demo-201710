@@ -8,37 +8,34 @@
     <link rel="stylesheet" href="./playlist.css">
     <link rel="stylesheet" href="./reset.css">
     <link rel="stylesheet" href="./home.css">
-    <title>播放列表</title>
+    <title>歌单列表</title>
 </head>
 
 <body>
     <div class="plWarp">
         <section class="plTop">
-            <div class="plTopbg" style="background-image:url(//oxkl41ihc.bkt.clouddn.com/%E5%BF%98%E8%AE%B0.jpg) no-repeat;"></div>
+            <div id="plTopbg" >
+                <!-- <div class="plTopbg" style="background-image:url(//oxkl41ihc.bkt.clouddn.com/%E5%BF%98%E8%AE%B0.jpg) no-repeat;"></div> -->
+            </div>
+            
             <div class="formDate">
-                <div class="fromCover">
-                    <img src="//oxkl41ihc.bkt.clouddn.com/%E5%BF%98%E8%AE%B0.jpg" alt="歌单封面">
+                <div id="fromCover" class="fromCover">
+                    <!-- <img src="//oxkl41ihc.bkt.clouddn.com/%E5%BF%98%E8%AE%B0.jpg" alt="歌单封面"> -->
                 </div>
-                <div class="fromTitle">
-                    <h2>「华语」哭泣使人乞讨，思念使人奔跑</h2>
-                    <div class="avatar">
-                        <a href="#">
-                            <img src="//oxkl41ihc.bkt.clouddn.com/avatar.jpg" alt="上传者头像">
-                            <span>CharitySylvia</span>
-                        </a>
-                    </div>
+                <div id="fromTitle" class="fromTitle">
                 </div>
             </div>
         </section>
         <section class="plIntro">
             <div class="pltags">
                 标签：
-                <a href="#">华语</a>
-                <a href="#">流行</a>
-                <a href="#">伤感</a>
+                <em href="#">华语</em>
+                <em href="#">流行</em>
+                <em href="#">伤感</em>
             </div>
             <div id="pltagsIntro" class="pltagsIntro plIntroHide">
                 <span>介绍： -<br/></span>
+                <br/>
                 <span>红尘中，能够将一个人轻轻放在心中，寂然相爱，默然相守，于我，已然是一种幸福。<br/></span>
                 <br/>
                 <span>一路走来相依相伴，牵念，能望穿最深的流年，相守，能温暖岁月所有的薄凉，<br/></span>
@@ -63,23 +60,30 @@
                 <br/>
                 <span>Ps:摘自范玮琪《因为》封面：谢雨泓</span>
             </div>
-            <span>↑</span>
+            <div id="pltagsToggle" class="pltagsToggle">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-down"></use>
+                </svg>
+            </div>
         </section>
         <section class="songs">
+            <h3 class="plsongsTitle">歌曲列表</h3>
             <ol id="plsongs" class="list hotlist">
             </ol>
         </section>
         <section class="plDn"></section>
     </div>
-    <script src="//at.alicdn.com/t/font_434816_sbsn0g8gxjbrzfr.js"></script>
+    <script src="//at.alicdn.com/t/font_434816_kj075tjsekjiqkt9.js"></script>
     <script src="./vendors/av-min.js"></script>
     <script src="./scripts/av.js"></script>
 </body>
 <script src="./vendors/jquery.min.js"></script>
 <script>
     var $pltagsIntro = $('#pltagsIntro');
+    var $plToggleSvg = $('#pltagsToggle > svg')
     $($pltagsIntro).click(function(){
         $pltagsIntro.toggleClass('plIntroHide')
+        $plToggleSvg.toggleClass('flipy')
     });
 
     let $olplSongs = $('ol#plsongs')
@@ -105,10 +109,60 @@
                 </a>
             </li>
             `
-            $olplSongs.append(li)
-          }
-      }, function (error) {
-        console.log('获取最新音乐出错')
-      });
+        $olplSongs.append(li)
+        }
+    }, function (error) {
+    console.log('获取最新音乐出错')
+    });
+
+
+
+
+
+    function getParameterByName(name,url){
+            if(!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g,"\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if(!results) return null;
+            if(!results[2]) return ' ';
+            return decodeURIComponent(results[2].replace(/\+/g," "));
+        }
+
+        let id = getParameterByName('id');
+        var $fromCover = $('#fromCover')
+        var $plTopbg = $('#plTopbg')
+        var $fromTitle = $('#fromTitle')
+        var query123 = new AV.Query('Playlist');
+        query123.get(id).then(function (song) {
+            let {url,musicListName,avatar,uploader,volume} = song.attributes
+            let cover = `
+                <div class="superscript">歌单</div>
+                <div class="amount">
+                    <svg class="icon icon-listen" aria-hidden="true">
+                        <use xlink:href="#icon-listen"></use>
+                    </svg>
+                    <span>${volume}</span>
+                </div>
+                <img src="${url}" alt="歌单封面">
+            `
+            let bg = `
+                <div class="plTopbg" style="background:url(${url}) no-repeat;"></div>
+            `
+            let fromtitle = `
+                <h2>${musicListName}</h2>
+                <div class="avatar">
+                    <a href="#">
+                        <img src="${avatar}" alt="上传者头像">
+                        <span>${uploader}</span>
+                    </a>
+                </div>
+            `
+            $fromCover.append(cover)
+            $plTopbg.append(bg)
+            $fromTitle.append(fromtitle)
+        }, function (error) {
+            alert('出错了')
+        });
 </script>
 </html>

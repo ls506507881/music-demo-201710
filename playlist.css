@@ -34,9 +34,53 @@
     display: flex;
     z-index: 2;
 }
+.fromCover{
+    position: relative;
+    font-size: 12px;
+}
+.fromCover >.amount{
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 2;
+    padding-left: 13px;
+    color: #fff;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 2px;
+    width: 100%;
+}
+.fromCover >.amount .icon-listen{
+    margin-top: 2px;
+    margin-right: 3px;
+}
+.fromCover >.amount::after {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 18px;
+    z-index: -1;
+    background-image: linear-gradient(90deg,transparent,rgba(0,0,0,.2));
+    padding: 0;
+} 
 .fromCover > img{
     width: 114px;
     height: 114px;
+}
+.fromCover >.superscript{
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    top: 10px;
+    padding: 0 8px;
+    line-height: 17px;
+    background-color: rgba(217,48,48,.8);
+    color: #fff;
+    font-size: 9px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 .fromTitle{
     margin-left: 16px;
@@ -64,6 +108,16 @@
     font-size: 14px;
     color: #B7B7B7;
 }
+.plsongsTitle{
+    line-height: 23px;
+    color: #666;
+    font-size: 12px;
+    background-color: #eeeff0;
+    padding-left: 10px;
+}
+#plsongs{
+    margin-top: 0;
+}
 .plIntro{
     position: relative;
     margin: 0 15px 0 10px;
@@ -71,11 +125,59 @@
     line-height: 19px;
     color: #666;
     font-size: 14px;
-    padding-bottom: 20px;
+}
+.plIntro > .pltags{
+    margin-bottom: 10px;
+    line-height: 20px;
+}
+.plIntro > .pltags > em{
+    display: inline-block;
+    font-size: 12px;
+    padding: 1px 8px;
+    margin-right: 6px;
+    font-style: normal;
+    position: relative;  
+}
+.plIntro > .pltags > em::after{
+    content: '';
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    border: 1px solid #cecece;
+    border-radius: 9999px;
+    -webkit-transform-origin: 0 0;
+    -moz-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    -o-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: scale(0.5, 0.5);
+    -ms-transform: scale(0.5, 0.5);
+    -o-transform: scale(0.5, 0.5);
+    transform: scale(0.5, 0.5);
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.pltagsIntro{
+    font-size: 14px;
+    color: #666;
+    line-height: 19px;
+}
+.pltagsToggle{
+    text-align: right;
+    margin-bottom: 6px;
+}
+.pltagsToggle > svg{
+    fill: #999;
 }
 .plIntroHide{
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     overflow: hidden;
+}
+.flipy { 
+    transform: rotateX(180deg); 
 }

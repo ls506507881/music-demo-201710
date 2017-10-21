@@ -164,6 +164,7 @@
                 transform: rotateZ(360deg);
             }
         }
+
     </style>
 </head>
 <body>
@@ -232,7 +233,7 @@
             var $playCover = $('#playCover')
             var $playbg = $('#pagebg')
             var querysong = new AV.Query('Song');
-            querysong.find().then(function (results) {
+            query.get(id).then(function (song) {
                 let {name,singer,cover} = song.attributes
                 let h2 = `
                 <span>${name}</span>
