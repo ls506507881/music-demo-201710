@@ -164,7 +164,39 @@
                 transform: rotateZ(360deg);
             }
         }
+        #playCover > .icon{
+            position: absolute;
+            z-index: 1;
+            fill: #fff;
+            width: 15vw;
+            height: 15vw;
+            display: flex;
+            top: 50%;
+            left: 50%;
+            border-radius: 50%;
+            background: rgba(0,0,0,.3);
+            transform: translate(-50%,-50%);
+        }
 
+        #playCover.playing .icon-playing{
+            display: none;
+        }
+        #playCover.playing.pause .icon-pause{
+            display: none;
+        }
+        #playCover.playing.pause .icon-playing{
+            display: block;
+        }
+
+        /* .icon-playing{
+            position: absolute;
+            z-index: 3;
+            fill: #fff;
+            width: 85px;
+            height: 85px;
+            left: 80px;
+            top: 80px;
+        } */
     </style>
 </head>
 <body>
@@ -176,6 +208,12 @@
         </section>
         <section class="disk">
             <div id="playCover" class="circle playing">
+                <svg class="icon icon-playing" aria-hidden="true">
+                    <use xlink:href="#icon-playing"></use>
+                </svg>
+                <svg class="icon icon-pause" aria-hidden="true">
+                    <use xlink:href="#icon-pause"></use>
+                </svg>
             </div>
         </section>
         <section class="song-description">
@@ -194,6 +232,7 @@
     <script src="./vendors/jquery.min.js"></script>
     <script src="./vendors/av-min.js"></script>
     <script src="./scripts/av.js"></script>
+    <script src="//at.alicdn.com/t/font_434816_g8gpd8s381c0izfr.js"></script>
     <script>
         //获取id
         function getParameterByName(name,url){
@@ -212,7 +251,26 @@
             let {url,lyric} = song.attributes
             let video = document.createElement('video')
             video.src = url
-            video.play()
+            video.oncanplay = function(){
+                video.play()
+                $('.icon-pause').on('click',function(){
+                    video.pause()
+                    $('#playCover').addClass('pause')
+                })
+                $('.icon-playing').on('click',function(){
+                    video.play()
+                    $('#playCover').removeClass('pause')
+                })
+                // $('#playCover').addClass('pause')
+            }
+            // $('#btnPlay').onclick = function paly(){
+            //     video.play()
+            // }
+            // $('#btnPause').onclick = function pause(){
+            //     video.pause()
+            // }
+            // video.play()
+
             let array = []
             let parts = lyric.split('\n')
             parts.forEach(function(string,index) {
@@ -227,6 +285,7 @@
                     lyric: xxx[1]
                 })
             });
+
 
             //歌曲
             var $deSname = $('#des-name')

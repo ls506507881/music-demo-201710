@@ -193,22 +193,23 @@
           <section id="hotsearch" class="hotsearch active">
             <h3 class="title">热门搜索</h3>
             <div class="panel">
-              <a href="#">时间都去哪儿了</a>
-              <a href="#">How Long</a>
-              <a href="#">Help Me Out</a>
-              <a href="#">To Know You</a>
-              <a href="#">Pray</a>
-              <a href="#">沈洁洁</a>
-              <a href="#">Falling in love</a>
-              <a href="#">虽然前途未卜 我愿陪你吃土</a>
-              <a href="#">远走高飞</a>
-              <a href="#">茶酒伴</a>
+              <a href="/song.html?id=59ea417475657146411d73d3">8000</a>
+              <a href="/song.html?id=59dbd41f1b69e60040c301f3">How Long</a>
+              <a href="/song.html?id=59ea424b17d00900636fc616">追光者</a>
+              <a href="/song.html?id=59dbd3e7128fe1529c899624">To Know You</a>
+              <a href="/song.html?id=59ea46e517d00900636fd236">带你去旅行</a>
+              <a href="/song.html?id=59ea45c075657146411d7e66">我愿意</a>
+              <a href="/song.html?id=59ea46751b69e61fb4bcb3d7">Panama</a>
+              <a href="/song.html?id=59ea46e7570c35088c59b1d2">Time</a>
+              <a href="/song.html?id=59ea46ec75657146411d82cc">理想三旬(live)</a>
+              <a href="/song.html?id=59dbd3f767f356003abd42a9">虽然前途未卜 我愿陪你吃土</a>
+              <a href="/song.html?id=59ea46eafe88c2003c0e0435">我们不一样</a>
             </div>
           </section>
       </li>      
     </ol>
   </div>
-  <script src="//at.alicdn.com/t/font_434816_kj075tjsekjiqkt9.js"></script>
+  <script src="//at.alicdn.com/t/font_434816_g8gpd8s381c0izfr.js"></script>
   <!-- // 表示继承当前协议 -->
   <script src="./vendors/jquery.min.js"></script>
   <script>
@@ -251,30 +252,6 @@
       }, function (error) {
         console.log('获取最新音乐出错')
       });
-
-    // let $olSongs = $('ol#songs')
-    // var query = new AV.Query('Song');
-    // query.find().then(function (results) {
-    //   $('#songs-loading').remove()
-    //   // let array = results;
-    //   for( var i = 0; i < results.length; i++){
-    //     let song = results[i].attributes
-    //     let li = `
-    //       <li>
-    //       <a href="./song.html?id=${results[i].id}">
-    //         <h3>${song.name}<span>${song.reMark}</span></h3>
-    //         <p><svg class="icon icon-sq" aria-hidden="true"><use xlink:href="#icon-sq"></use></svg>${song.singer} - ${song.album}</p>
-    //         <div class="playButton" href="#">
-    //           <svg class="icon icon-play" aria-hidden="true"><use xlink:href="#icon-play"></use></svg>
-    //         </div>
-    //       </a>
-    //       </li>
-    //     `
-    //     $olSongs.append(li)
-    //   }
-    // }, function (error) {
-    //   alert('获取歌曲失败')
-    // });
 
 // 推荐歌单
     let $olPlaylists = $('ol#playlists')
