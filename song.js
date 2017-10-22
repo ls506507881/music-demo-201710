@@ -9,6 +9,23 @@ function getParameterByName(name, url) {
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+//播放暂停歌曲
+let id = getParameterByName("id");
+var query = new AV.Query("Song");
+query.get(id).then(function(song) {
+  let { url, lyric } = song.attributes;
+  let video = document.createElement("video");
+  video.src = url;
+  video.oncanplay = function() {
+    $(".icon-pause").on("click", function() {
+      video.pause();
+      $("#playCover").addClass("pause");
+    });
+    $(".icon-playing").on("click", function() {
+      video.play();
+      $("#playCover").removeClass("pause");
+    });
+  };
 
 let array = [];
 let parts = lyric.split("\n");
@@ -25,7 +42,7 @@ parts.forEach(function(string, index) {
   });
 });
 
-//歌曲
+//从leancloud 获取当前页面歌曲数据
 var $deSname = $("#des-name");
 var $playCover = $("#playCover");
 var $playbg = $("#pagebg");
@@ -74,41 +91,17 @@ setInterval(function() {
     if (i === array.length - 1) {
       // console.log(array[i].time)
       $whichLine = $scrolls.eq(i);
-    } else if (
-      array[i + 1] != undefined &&
-      currentLineTime <= current &&
-      nextLineTime > current
-    ) {
+    } else if ( array[i + 1] != undefined && currentLineTime <= current && nextLineTime > current) {
       $whichLine = $scrolls.eq(i);
       break;
     }
   }
   if ($whichLine) {
-    $whichLine
-      .addClass("active")
-      .prev()
-      .removeClass("active");
+    $whichLine.addClass("active").prev().removeClass("active");
     let top = $whichLine.offset().top;
     let scrollTop = $(".scroll").offset().top;
     let delta = top - scrollTop - $(".lyric").height() / 3;
     $(".scroll").css("transform", `translateY(-${delta}px)`);
   }
 }, 500);
-
-let id = getParameterByName("id");
-var query = new AV.Query("Song");
-query.get(id).then(function(song) {
-  let { url, lyric } = song.attributes;
-  let video = document.createElement("video");
-  video.src = url;
-  video.oncanplay = function() {
-    $(".icon-pause").on("click", function() {
-      video.pause();
-      $("#playCover").addClass("pause");
-    });
-    $(".icon-playing").on("click", function() {
-      video.play();
-      $("#playCover").removeClass("pause");
-    });
-  };
 });
